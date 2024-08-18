@@ -73,19 +73,8 @@ const UserProfile = () => {
           </div>
         </div>
       )}
-      {/* {profile && (
-        <div className="bg-white shadow-md rounded-lg p-6" style={{ backgroundColor: WebApp.secondaryBgColor }}>
-          <h3 className="text-lg font-semibold mb-4">Additional Information</h3>
-          {/* Add any additional profile information here */}
-          {profile?.email && (
-            <div className="flex items-center mb-2">
-              <AtSign size={20} className="mr-2" />
-              <p>{profile?.email}</p>
-            </div>
-          )}
-          {/* Add more profile fields as needed */}
-        </div>
-      )} */}
+     
+     
     </motion.div>
   )
 }
