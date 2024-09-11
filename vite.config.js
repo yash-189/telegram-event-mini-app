@@ -10,5 +10,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-    base: '/telegram-event-mini-app/'
+    base: '/telegram-event-mini-app'
 })

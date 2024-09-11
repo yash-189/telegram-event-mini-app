@@ -21,8 +21,8 @@ const CreateEvent = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Create New Event</h1>
+    <div className='max-w-xl mx-auto  h-full min-h-[80vh] flex justify-center items-center '>
+
       <CreateEventForm onEventCreated={handleEventCreated} />
     </div>
   )

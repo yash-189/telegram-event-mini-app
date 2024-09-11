@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Home as HomeIcon, Calendar, PlusCircle, User } from 'lucide-react'
-import Home from './pages/Home'
-import EventDetails from './pages/EventDetails'
-import CreateEvent from './pages/CreateEvent'
-import MyEvents from './pages/MyEvents'
-import UserProfile from './pages/UserProfile'
-import WebApp from '@twa-dev/sdk'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import WebApp from '@twa-dev/sdk';
+
+import Home from './pages/Home';
+import EventDetails from './pages/EventDetails';
+import CreateEvent from './pages/CreateEvent';
+import MyEvents from './pages/MyEvents';
+import UserProfile from './pages/UserProfile';
+
+import Header from './components/Header';
+import NavigationBar from './components/NavigationBar';
+import Coins from './pages/Coins';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('home')
+  const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
     document.body.style.backgroundColor = WebApp.backgroundColor;
@@ -24,9 +28,7 @@ function App() {
       transition={{ duration: 0.5 }}
       className="container mx-auto px-4 min-h-screen flex flex-col "
     >
-      <header className="py-4 mb-8">
-        <h1 className="text-3xl font-bold text-center">Event Mini App</h1>
-      </header>
+      <Header />
       <main className="flex-grow">
         <Routes>
           <Route path="/telegram-event-mini-app/" element={<Home />} />
@@ -34,46 +36,13 @@ function App() {
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/my-events" element={<MyEvents />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/coins" element={<Coins />} />
         </Routes>
       </main>
-      <footer className="py-4 mt-8">
-        <nav className="flex justify-around">
-          <Link 
-            to="/telegram-event-mini-app/" 
-            className={`flex flex-col items-center ${activeTab === 'home' ? 'text-blue-500' : ''}`}
-            onClick={() => setActiveTab('home')}
-          >
-            <HomeIcon size={24} />
-            <span>Home</span>
-          </Link>
-          <Link 
-            to="/my-events" 
-            className={`flex flex-col items-center ${activeTab === 'myEvents' ? 'text-blue-500' : ''}`}
-            onClick={() => setActiveTab('myEvents')}
-          >
-            <Calendar size={24} />
-            <span>My Events</span>
-          </Link>
-          <Link 
-            to="/create-event" 
-            className={`flex flex-col items-center ${activeTab === 'create' ? 'text-blue-500' : ''}`}
-            onClick={() => setActiveTab('create')}
-          >
-            <PlusCircle size={24} />
-            <span>Create</span>
-          </Link>
-          <Link 
-            to="/profile" 
-            className={`flex flex-col items-center ${activeTab === 'profile' ? 'text-blue-500' : ''}`}
-            onClick={() => setActiveTab('profile')}
-          >
-            <User size={24} />
-            <span>Profile</span>
-          </Link>
-        </nav>
-      </footer>
+      <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      
     </motion.div>
-  )
+  );
 }
 
-export default App
+export default App;

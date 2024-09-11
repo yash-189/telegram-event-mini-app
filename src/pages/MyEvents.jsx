@@ -1,39 +1,73 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import EventList from '../components/EventList'
-import { getUserEvents, voteEvent } from '../utils/api'
 import WebApp from '@twa-dev/sdk'
+
+const dummyEvents = [
+  {
+    _id: '1',
+    title: 'Ethereum 2.0 Launch Party',
+    description: 'Join us for the celebration of Ethereum\'s transition to Proof of Stake!',
+    date: '2023-06-15T18:00:00',
+    location: 'Virtual Event',
+    category: 'Launch',
+    votes: 120
+  },
+  {
+    _id: '2',
+    title: 'Bitcoin Halving Countdown',
+    description: 'Watch the live countdown to the next Bitcoin halving event.',
+    date: '2024-05-01T00:00:00',
+    location: 'Online Streaming',
+    category: 'Network Event',
+    votes: 95
+  },
+  {
+    _id: '3',
+    title: 'DeFi Summit 2023',
+    description: 'Explore the latest trends and innovations in Decentralized Finance.',
+    date: '2023-09-10T09:00:00',
+    location: 'New York City',
+    category: 'Conference',
+    votes: 78
+  },
+  {
+    _id: '4',
+    title: 'NFT Art Exhibition',
+    description: 'Showcase of the most valuable and innovative NFT artworks.',
+    date: '2023-07-22T10:00:00',
+    location: 'Los Angeles Convention Center',
+    category: 'Exhibition',
+    votes: 62
+  },
+  {
+    _id: '5',
+    title: 'Crypto Trading Masterclass',
+    description: 'Learn advanced trading strategies from crypto experts.',
+    date: '2023-08-05T14:00:00',
+    location: 'Online Webinar',
+    category: 'Education',
+    votes: 55
+  }
+]
 
 const MyEvents = () => {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchUserEvents()
+    // Simulate API call with setTimeout
+    setTimeout(() => {
+      setEvents(dummyEvents)
+      setLoading(false)
+    }, 1000)
   }, [])
 
-  const fetchUserEvents = async () => {
-    try {
-      setLoading(true)
-      const response = await getUserEvents()
-      setEvents(response.data)
-    } catch (error) {
-      WebApp.showAlert('Error fetching your events: ' + error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleVote = async (eventId, voteValue) => {
-    try {
-      const response = await voteEvent(eventId, voteValue)
-      setEvents(events.map(event => 
-        event._id === eventId ? { ...event, ...response.data } : event
-      ))
-      WebApp.showAlert('Vote recorded successfully!')
-    } catch (error) {
-      WebApp.showAlert('Error voting: ' + error.message)
-    }
+  const handleVote = (eventId, voteValue) => {
+    setEvents(events.map(event => 
+      event._id === eventId ? { ...event, votes: event.votes + voteValue } : event
+    ))
+    WebApp.showAlert('Vote recorded successfully!')
   }
 
   return (
@@ -41,8 +75,10 @@ const MyEvents = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
+      className='max-w-2xl mx-auto pt-4 pb-28'
     >
-      <h1 className="text-3xl font-bold mb-8 text-center">My Events</h1>
+    
+    
       {loading ? (
         <motion.div
           animate={{ rotate: 360 }}
@@ -53,7 +89,7 @@ const MyEvents = () => {
         events.length > 0 ? (
           <EventList events={events} onVote={handleVote} />
         ) : (
-          <p className="text-center text-gray-500">You haven't created any events yet.</p>
+          <p className="text-center text-gray-500">No crypto events found.</p>
         )
       )}
     </motion.div>
